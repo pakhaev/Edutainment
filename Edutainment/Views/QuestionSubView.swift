@@ -8,11 +8,35 @@
 import SwiftUI
 
 struct QuestionSubView: View {
+    @EnvironmentObject var vm: EdutainmentViewModel
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Section() {
+            HStack {
+                Text(vm.questions[vm.currentIndex].text)
+                    .animation(.spring, value: vm.range)
+                    .animation(.spring, value: vm.numberOfQuestions)
+                
+                Spacer()
+                
+                TextField("", value: $vm.userAnswer, format: .number)
+                    .frame(width: 38)
+                    .keyboardType(.numberPad)
+                    .onSubmit {
+                        vm.checkUserAnswer()
+                    }
+                    .textFieldStyle(.roundedBorder)
+            }
+        } header: {
+            Text("Вопрос № \(vm.currentIndex + 1)")
+                .foregroundStyle(.white)
+                .font(.headline)
+        }
+        .animation(.bouncy, value: vm.currentIndex)
     }
 }
 
 #Preview {
     QuestionSubView()
+        .environmentObject(EdutainmentViewModel())
 }

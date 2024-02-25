@@ -8,11 +8,22 @@
 import SwiftUI
 
 struct CurrentAnswersSubView: View {
+    @EnvironmentObject var vm: EdutainmentViewModel
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Section() {
+            Text("\(vm.currentAnswers)")
+                .animation(.easeIn, value: vm.currentAnswers)
+        } header: {
+            Text("Правильные ответы")
+                .foregroundStyle(.white)
+                .font(.headline)
+        }
+        
     }
 }
 
 #Preview {
     CurrentAnswersSubView()
+        .environmentObject(EdutainmentViewModel())
 }
